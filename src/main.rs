@@ -1,18 +1,30 @@
 
-
-
-use std::{env, fs::{File, OpenOptions}, io::{self, Write}};
+use std::{env, fs::{File, OpenOptions}, io::{self, Read, Write}};
 fn main() -> io::Result<()>{
     // collecting arguments from CLI
     let arg:Vec<String> = env::args().skip(1).collect();
 
     //if arguments are there, check if first argument is "add"
-    if arg.len() > 0 && arg[0] == "add".to_string(){
-        writing_tasks(arg[1..].join(" "))?;
+    if arg.len() > 0{
+        if arg[0] == "add".to_string(){
+            writing_tasks(arg[1..].join(" "))?;
+        }
+        if arg[0] == "list".to_string(){
+            let content = list_tasks()?;
+            for (index, value) in content.lines()
+                .filter(|x|!x.trim()
+                .is_empty())
+                .enumerate(){
+                    println!("{}. [ ] {}",index+1, value.trim());
+            }
+        }
+
     }
+    
     Ok(())
 }
 fn writing_tasks(task: String) -> io::Result<()>{
+
     // converting input to a vec of &[u8] to write in a local file
     let byte_task = task.as_bytes().to_vec();
     
@@ -43,4 +55,11 @@ fn writing_tasks(task: String) -> io::Result<()>{
         }
     }
     Ok(())
+}
+
+fn list_tasks() -> io::Result<String>{
+    let mut file = File::open("Tasks.txt")?;
+    let mut content = String::new();
+    file.read_to_string(&mut content)?;
+    Ok(content)
 }
