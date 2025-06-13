@@ -1,20 +1,23 @@
 use std::{
     env,
     fs::{File, OpenOptions},
-    io::{self, Read, Write},
+    io::{self, Write},
 };
+
+mod list;
 fn main() -> io::Result<()> {
     // collecting arguments from CLI
     let arg: Vec<String> = env::args().skip(1).collect();
-
+    
     //if arguments are there, check if first argument is "add"
     if arg.len() > 0 {
+        
         if arg[0] == "add".to_string() {
             writing_tasks(arg[1..].join(" "))?;
-            println!("{}",list_tasks().expect("add hit issue"));
+            println!("{}",list::list_tasks().expect("error"));
         }
         if arg[0] == "list".to_string() {
-            let content = list_tasks()?;
+            let content = list::list_tasks()?;
             for (index, value) in content.lines()
                 .filter(|x| !x.trim().is_empty())
                 .enumerate() {
@@ -24,15 +27,15 @@ fn main() -> io::Result<()> {
         }
         if arg[0] == "complete".to_string() {
             complete(arg[1].clone())?;
-            println!("{}",list_tasks().expect("Complete ran into trouble"));
+            println!("{}",list::list_tasks().expect("Complete ran into trouble"));
         }
         
         if arg[0] == "delete".to_string() {
             delete(arg[1].clone())?;
-            println!("{}",list_tasks().expect("delete ran into trouble"));
+            println!("{}",list::list_tasks().expect("delete ran into trouble"));
         }
-
-    }
+    };
+    
     Ok(())
 }
 fn writing_tasks(task: String) -> io::Result<()> {
@@ -50,12 +53,7 @@ fn writing_tasks(task: String) -> io::Result<()> {
     Ok(())
 }
 
-fn list_tasks() -> io::Result<String> {
-    let mut file = File::open("Tasks.txt")?;
-    let mut content = String::new();
-    file.read_to_string(&mut content)?;
-    Ok(content)
-}
+
 
 fn complete(task_str: String) -> io::Result<()> {
     let target_task = match task_str.parse::<usize>() {
@@ -67,7 +65,7 @@ fn complete(task_str: String) -> io::Result<()> {
     };
     // The argument number's new name is "target_task" is a 'usize'
 
-    let file_content = match list_tasks() {
+    let file_content = match list::list_tasks() {
         Ok(content) => content,
         Err(e) => {
             eprintln!("Error reading from File");
@@ -117,7 +115,7 @@ fn delete(del:String) -> io::Result<()>{
             return Ok(());
         }
     };
-    let file_content = match list_tasks(){
+    let file_content = match list::list_tasks(){
         Ok(content) => content,
         Err(e) => {
             eprintln!("Error while fetching file_content in Delete fn, Error: {}",e);
