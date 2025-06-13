@@ -1,5 +1,2 @@
-do homework
-do home
-
-
-task done
+[ ] Read people 
+[ ] Read book 
