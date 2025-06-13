@@ -142,11 +142,5 @@ fn delete(del:String) -> io::Result<()>{
     let mut file = File::create("Tasks.txt")?;
     file.write_all(new_content_n.as_bytes())?;
 
-
-
-
-
-
-
     Ok(())
 }
