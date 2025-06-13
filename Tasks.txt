@@ -1,7 +1,0 @@
-[ ] Read people 
-[ ] Do something 
-[X] testing point 3 
-[ ] lets complete and delete this point 
-[ ] lets complete and delete this point 
-[ ] lets complete and delete this point 
-[ ] lets complete and delete this point 
