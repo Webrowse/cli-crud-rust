@@ -1,5 +1,6 @@
 use crate::list;
-use std::io;
+use std::io::{self, Write};
+use std::fs::{File};
 
 
 pub fn complete(task_str: String) -> io::Result<()> {
@@ -24,7 +25,7 @@ pub fn complete(task_str: String) -> io::Result<()> {
     let mut lines: Vec<String> = file_content.lines().map(|line| line.to_string()).collect();
     // Each line of file_content was collected as an separate element in a vector names "lines".
 
-    let mut task_found_count ; //Because undex starts with 0, and list starts with 1
+    let mut task_found_count ; //Because index starts with 0, and list starts with 1
 
     for (i, line) in lines.iter_mut().enumerate() {
         //iter through the Vector with tasks
