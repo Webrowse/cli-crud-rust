@@ -1,12 +1,12 @@
 use std::{
     env,
-    fs::OpenOptions,
-    io::{self, Write},
+    io::{self},
 };
 
 mod list;
 mod delete;
 mod complete;
+mod add;
 fn main() -> io::Result<()> {
     // collecting arguments from CLI
     let arg: Vec<String> = env::args().skip(1).collect();
@@ -15,7 +15,7 @@ fn main() -> io::Result<()> {
     if arg.len() > 0 {
         
         if arg[0] == "add".to_string() {
-            writing_tasks(arg[1..].join(" "))?;
+            add::writing_tasks(arg[1..].join(" "))?;
             println!("{}",list::list_tasks().expect("error"));
         }
         if arg[0] == "list".to_string() {
@@ -38,20 +38,6 @@ fn main() -> io::Result<()> {
         }
     };
     
-    Ok(())
-}
-fn writing_tasks(task: String) -> io::Result<()> {
-    let formatted_task = format!("[ ] {} \n", task);
-    let combined_args = formatted_task.as_bytes();
-
-    let mut file = OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open("Tasks.txt")?;
-
-    file.write_all(&combined_args)?;
-    println!("File updated successfully: Tasks.txt");
-
     Ok(())
 }
 
