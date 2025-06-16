@@ -8,9 +8,9 @@ use crate::add;
 pub fn matching() -> io::Result<()> {
     let arg: Vec<String> = env::args().skip(1).collect();
     
-    //if arguments are there, check if first argument is "add"
     if arg.len() > 0 {
         
+        //if arguments are there, check if first argument is "add"
         if arg[0] == "add" {
             add::writing_tasks(arg[1..].join(" "))?;
             println!("{}",list::list_tasks().expect("error"));
