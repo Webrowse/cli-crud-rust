@@ -1,116 +1,73 @@
-# bt - A Zero-Dependency Rust CLI To-Do App
+# notez - A Zero-Dependency Rust CLI To-Do Manager
 
-`bt` is a command-line task manager built in Rust. It allows users to add, view, complete, and delete tasks using simple commands, storing data locally in a `Tasks.txt` file.
+`notez` is a command-line task manager built in Rust without any external dependencies. It allows users to add, view, complete, and delete tasks using simple commands, storing data locally in a `Tasks.txt` file.
 
----
+## Features
 
-##  Installation
+* Zero dependencies (no `clap`, `serde`, or other crates)
+* Simple text-based task storage
+* Cross-platform compatible (as long as Rust is installed)
 
-Ensure Rust is installed. You can install Rust using:
+## Getting Started
+
+You must have Rust installed. Visit [https://rustup.rs](https://rustup.rs) for setup instructions.
+
+### Build the Application
 
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-Clone the repository and build the binary:
-
-```bash
-git clone https://github.com/Webrowse/cli-crud-rust.git
-cd cli-crud-rust
 cargo build --release
 ```
 
-This will generate an optimized executable at `target/release/bt`.
+The compiled binary will be located at `target/release/notez`.
 
----
+## Usage
 
-##  Usage
+All task data is stored in `Tasks.txt` in the same directory as the binary.
 
-All commands are executed using the binary:
-
-```bash
-./bt <command> [arguments]
-```
-
-All tasks are stored in a local file named `Tasks.txt`.
-
-### 1. Add a Task
-
-Add a new task marked as incomplete.
+### Add Task
 
 ```bash
-./bt add "Buy groceries"
+./notez add "Buy groceries"
 ```
 
-> Output example:  
-> `File updated successfully: Tasks.txt`  
-> `1. [ ] Buy groceries`
-
----
-
-### 2. List All Tasks
-
-Display all tasks with numerical indices.
+### List Tasks
 
 ```bash
-./bt list
+./notez list
 ```
 
-> Output:
+Sample Output:
+
 ```
 1   [ ] Buy groceries
-2   [X] Call mom
+2   [X] Walk the dog
 ```
 
----
-
-### 3. Mark a Task as Complete/Incomplete
-
-Toggle a task's status using its number.
+### Complete or Incomplete Toggle
 
 ```bash
-./bt complete 2
+./notez complete 1
 ```
 
-> Output:  
-> `Task 2 marked as incomplete`
+Toggles task 1 between completed `[X]` and incomplete `[ ]`.
 
----
-
-### 4. Delete a Task
-
-Remove a task permanently.
+### Delete Task
 
 ```bash
-./bt delete 1
+./notez delete 1
 ```
 
-> Output:  
-> `Deleted 1: [ ] Buy groceries`
+Deletes the task with the given number.
+
+## Limitations
+
+* Task storage is plain text, no structured format like JSON or CSV
+* File is overwritten each time a task is completed or deleted
+
+## License
+
+This project is licensed under the MIT License.
 
 ---
 
-##  File Storage
-
-All tasks are saved in `Tasks.txt` (plain text) located in the same directory as the binary. Ensure you have write permissions for this file.
-
----
-
-##  Features
-
-- No external dependencies
-- Small binary size
-- Pure standard library code
-- Robust input validation
-- Includes unit tests for core functionality
-
----
-
-##  Notes
-
-- Task indices start from `1` (human-friendly).
-- Empty or invalid inputs are gracefully handled.
-- Errors are displayed with clear messages.
-- This project is a clean foundation for exploring more advanced CLI applications.
-
----
+A pure, zero-dependency CLI utility in Rust to keep your task list clean and manageable.

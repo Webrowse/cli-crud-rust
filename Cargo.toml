@@ -1,6 +1,6 @@
 [package]
 name = "notez"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Adarsh adarshtechjob@gmail.com"]
 description = "A zero-dependency CLI to-do manager in pure rust"
