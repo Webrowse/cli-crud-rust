@@ -1,30 +1,116 @@
-Rust CLI To-Do Application
+# bt - A Zero-Dependency Rust CLI To-Do App
 
-This command-line application, developed in Rust, facilitates fundamental task management: adding, listing, modifying status, and deleting tasks directly from the terminal.
-Getting Started
+`bt` is a command-line task manager built in Rust. It allows users to add, view, complete, and delete tasks using simple commands, storing data locally in a `Tasks.txt` file.
 
-Deployment requires Rust installation, with instructions available at rust-lang.org. To compile, save the source as main.rs, navigate to its directory, and execute rustc main.rs. This generates an executable file (e.g., main or main.exe).
-Operational Instructions
+---
 
-Invoke the compiled binary with a command and its arguments. All task data persists in Tasks.txt within the execution directory.
-Available Commands:
+##  Installation
 
-    Add Task: ./main add <description>. New tasks are initialized as incomplete [ ].
+Ensure Rust is installed. You can install Rust using:
 
-        Example: ./main add Acquire supplies
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 
-    List Tasks: ./main list. Displays all recorded tasks with numerical indexing.
+Clone the repository and build the binary:
 
-        Example: ./main list (Output: 1. [ ] Acquire supplies)
+```bash
+git clone https://github.com/Webrowse/cli-crud-rust.git
+cd cli-crud-rust
+cargo build --release
+```
 
-    Modify Status: ./main complete <number>. Toggles task completion status [ ] ↔ [X].
+This will generate an optimized executable at `target/release/bt`.
 
-        Example: ./main complete 1
+---
 
-    Delete Task: ./main delete <number>. Permanently removes a task from the list.
+##  Usage
 
-        Example: ./main delete 2
+All commands are executed using the binary:
 
-Capabilities & Limitations
+```bash
+./bt <command> [arguments]
+```
 
-This foundational CLI tool demonstrates Rust CLI and file handling. It stores tasks in Tasks.txt and incorporates basic error handling. Future enhancements may include an interactive mode, refined error messaging, extended features (e.g., prioritization), and enhanced robustness.
+All tasks are stored in a local file named `Tasks.txt`.
+
+### 1. Add a Task
+
+Add a new task marked as incomplete.
+
+```bash
+./bt add "Buy groceries"
+```
+
+> Output example:  
+> `File updated successfully: Tasks.txt`  
+> `1. [ ] Buy groceries`
+
+---
+
+### 2. List All Tasks
+
+Display all tasks with numerical indices.
+
+```bash
+./bt list
+```
+
+> Output:
+```
+1   [ ] Buy groceries
+2   [X] Call mom
+```
+
+---
+
+### 3. Mark a Task as Complete/Incomplete
+
+Toggle a task's status using its number.
+
+```bash
+./bt complete 2
+```
+
+> Output:  
+> `Task 2 marked as incomplete`
+
+---
+
+### 4. Delete a Task
+
+Remove a task permanently.
+
+```bash
+./bt delete 1
+```
+
+> Output:  
+> `Deleted 1: [ ] Buy groceries`
+
+---
+
+##  File Storage
+
+All tasks are saved in `Tasks.txt` (plain text) located in the same directory as the binary. Ensure you have write permissions for this file.
+
+---
+
+##  Features
+
+- No external dependencies
+- Small binary size
+- Pure standard library code
+- Robust input validation
+- Includes unit tests for core functionality
+
+---
+
+##  Notes
+
+- Task indices start from `1` (human-friendly).
+- Empty or invalid inputs are gracefully handled.
+- Errors are displayed with clear messages.
+- This project is a clean foundation for exploring more advanced CLI applications.
+
+---

@@ -15,7 +15,7 @@ pub fn matching() -> io::Result<()> {
 
     match arg[0].as_str() {
         "add" => {
-            if arg.len() < 2 {
+            if arg.len() > 1 {
                 add::writing_tasks(arg[1..].join(" "))?;
                 println!("{}", list::list_tasks().expect("error"));
             } else {
@@ -29,7 +29,7 @@ pub fn matching() -> io::Result<()> {
             }
         }
         "complete" => {
-            if arg.len() < 2 {
+            if arg.len() > 1 {
                 complete::complete(arg[1].clone())?;
                 println!("{}", list::list_tasks().expect("Complete ran into trouble"));
             } else {
@@ -37,7 +37,7 @@ pub fn matching() -> io::Result<()> {
             }
         }
         "delete" => {
-            if arg.len() < 2 {
+            if arg.len() > 1 {
                 delete::delete(arg[1].clone())?;
                 println!("{}", list::list_tasks().expect("delete ran into trouble"));
             } else {

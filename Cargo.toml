@@ -1,6 +1,13 @@
 [package]
-name = "bare_tasker"
+name = "bt"
 version = "0.1.0"
 edition = "2021"
+authors = ["Adarsh adarshtechjob@gmail.com"]
+description = "A zero-dependency CLI to-do manager in pure rust"
+license = "MIT"
+repository = "github.com/Webrowse/cli-crud-rust"
+readme = "README.md"
+categories = ["command-line-utilities"]
+keywords = ["cli", "todo", "rust", "task"]
 
 [dependencies]
