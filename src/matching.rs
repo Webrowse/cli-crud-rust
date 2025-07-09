@@ -1,39 +1,55 @@
 use std::{env, io};
 
-use crate::list;
-use crate::delete;
-use crate::complete;
 use crate::add;
+use crate::complete;
+use crate::delete;
+use crate::list;
 
 pub fn matching() -> io::Result<()> {
     let arg: Vec<String> = env::args().skip(1).collect();
-    
-    if arg.len() > 0 {
-        
-        //if arguments are there, check if first argument is "add"
-        if arg[0] == "add" {
-            add::writing_tasks(arg[1..].join(" "))?;
-            println!("{}",list::list_tasks().expect("error"));
+
+    if arg.is_empty() {
+        eprintln!("Please provide a command: add, list, complete, or delete");
+        return Ok(());
+    }
+
+    match arg[0].as_str() {
+        "add" => {
+            if arg.len() < 2 {
+                add::writing_tasks(arg[1..].join(" "))?;
+                println!("{}", list::list_tasks().expect("error"));
+            } else {
+                eprintln!("Please provide the tasks to add")
+            };
         }
-        if arg[0] == "list" {
+        "list" => {
             let content = list::list_tasks()?;
-            for (index, value) in content.lines()
-                .filter(|x| !x.trim().is_empty())
-                .enumerate() {
-                println!("{}. {}", index + 1, value.trim());
+            for (index, value) in content.lines().filter(|x| !x.trim().is_empty()).enumerate() {
+                println!("{:<3} {}", index + 1, value.trim());
             }
-            
         }
-        if arg[0] == "complete" {
-            complete::complete(arg[1].clone())?;
-            println!("{}",list::list_tasks().expect("Complete ran into trouble"));
+        "complete" => {
+            if arg.len() < 2 {
+                complete::complete(arg[1].clone())?;
+                println!("{}", list::list_tasks().expect("Complete ran into trouble"));
+            } else {
+                eprintln!("Please enter the task number");
+            }
         }
-        
-        if arg[0] == "delete" {
-            delete::delete(arg[1].clone())?;
-            println!("{}",list::list_tasks().expect("delete ran into trouble"));
+        "delete" => {
+            if arg.len() < 2 {
+                delete::delete(arg[1].clone())?;
+                println!("{}", list::list_tasks().expect("delete ran into trouble"));
+            } else {
+                eprintln!(
+                    r#"Please give proper command\n such as following:\n "bare_tasker delete 1" "#
+                )
+            }
+        }
+        _ => {
+            eprintln!("Invalid command");
         }
     };
-    
+
     Ok(())
 }
