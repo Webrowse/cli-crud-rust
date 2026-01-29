@@ -1,0 +1,27 @@
+
+name: CI
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu_latest
+
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v6
+
+          - name: Install Rust
+            uses: actions-rs/toolchain@v1
+            with: 
+                toolchain: stable
+                override: true
+
+          - name: Cargo Build
+            run: cargo build --verbose
+
+          - name: Cargo run
+            run: cargo run --verbose
+
